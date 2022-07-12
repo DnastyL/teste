@@ -37,6 +37,17 @@ module.exports = {
                 }
             }
         },
+        screens : {
+            'sml': {'max': '350px'},
+            'smll': {'max': '440px'},
+            'smd': {'max': '500px'},
+            'sm': {'max': '640px'},
+            'md': {'max': '768px'},
+            'mdx':{'max': '900px'},
+            'lg': {'max': '1024px'},
+            'lgx': {'max': '1130px'},
+            'xl': {'max': '1280px'},
+        }
     },
     plugins: [],
 }

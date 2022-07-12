@@ -1,4 +1,3 @@
-import { gql, useMutation } from "@apollo/client";
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../components/Logo";
@@ -28,16 +27,16 @@ export const Subscribe = () => {
 
   return (
     <div className="min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center">
-      <div className=" w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto">
-        <div className="max-w-[640px]">
+      <div className=" w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto lg:flex-col lg:max-w-full lg:gap-3 ">
+        <div className="max-w-[640px] sm:max-w-[330px] sm:flex sm:flex-col sm:items-center">
           <Logo />
 
-          <h1 className="mt-8 text-[2.5rem] leading-tight">
+          <h1 className="mt-8 text-[2.5rem] leading-tight sm:text-center sm:text-[2.2rem]">
             Construa uma{" "}
-            <strong className="text-blue-500">aplicação completa</strong>, do
+            <strong className="text-blue-500">aplicação completa,</strong> do
             zero, com <strong className="text-blue-500">React</strong>
           </h1>
-          <p className="mt-4 text-gray-200 leading-relaxed">
+          <p className="mt-4 text-gray-200 leading-relaxed sm:text-center">
             Em apenas uma semana você vai dominar na prática uma das tecnologias
             mais utilizadas e com alta demanda para acessar as melhores
             oportunidades do mercado{" "}
@@ -74,7 +73,7 @@ export const Subscribe = () => {
         </div>
       </div>
 
-      <img src="/src/assets/code-mackup.png" className="mt-10" alt="" />
+      <img src="/src/assets/code-mackup.png" className="mt-10 lg:p-6" alt="" />
     </div>
   );
 };

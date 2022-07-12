@@ -41,7 +41,7 @@ export const Video = ({ lessonSlug }: VideoProps) => {
       </div>
 
       <div className="p-8 max-w-[1100px] mx-auto">
-        <div className="flex items-start gap-16">
+        <div className="flex items-start gap-16 mdx:flex-col smd:items-stretch">
           <div className="flex-1">
             <h1 className="text-2xl font-bold">{data.lesson.title}</h1>
             <p className="mt-4 text-gray-200 leading-relaxed">
@@ -82,40 +82,40 @@ export const Video = ({ lessonSlug }: VideoProps) => {
             </a>
           </div>
         </div>
-        <div className="gap-8 mt-20 grid grid-cols-2">
+        <div className="gap-8 mt-20 grid grid-cols-2 lg:grid-cols-none">
           <a
             href=""
-            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors"
+            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors smll:gap-3"
           >
-            <div className="bg-green-700 h-full p-6 flex items-center">
+            <div className="bg-green-700 h-full p-6 flex items-center sml:p-2">
               <FileArrowDown size={40} />
             </div>
-            <div className="py-6 leading-relaxed">
-              <strong className="text-2xl">Material Complementar</strong>
-              <p className="text-sm text-gray-200 mt-2">
-                Baixe wallpapers exclusivos do Ignite Lab e personalize a sua
-                máquina
+            <div className="py-6 leading-relaxed ">
+              <strong className="text-2xl smll:text-base">Material Complementar</strong>
+              <p className="text-sm text-gray-200 mt-2 sml:text-xs">
+                Acesse o material complementar para acelerar o seu
+                desenvolvimento
               </p>
             </div>
-            <div className="h-full p-6 flex items-center">
+            <div className="h-full p-6 flex items-center md:p-3 smll:p-2">
               <CaretRight size={24} />
             </div>
           </a>
           <a
             href=""
-            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors"
+            className="bg-gray-700 rounded overflow-hidden flex items-stretch gap-6 hover:bg-gray-600 transition-colors smll:gap-3"
           >
-            <div className="bg-green-700 h-full p-6 flex items-center">
+            <div className="bg-green-700 h-full p-6 flex items-center sml:p-2">
               <Image size={40} />
             </div>
             <div className="py-6 leading-relaxed">
-              <strong className="text-2xl">Material Complementar</strong>
-              <p className="text-sm text-gray-200 mt-2">
-                Acesse o material complementar para acelerar o seu
-                desenvolvimento
+              <strong className="text-2xl smll:text-base">Wallpapers exclusivos</strong>
+              <p className="text-sm text-gray-200 mt-2 sml:text-xs">
+                Baixe wallpapers exclusivos do Ignite Lab e personalize a sua
+                máquina
               </p>
             </div>
-            <div className="h-full p-6 flex items-center">
+            <div className="h-full p-6 flex items-center md:p-3 smll:p-2">
               <CaretRight size={24} />
             </div>
           </a>

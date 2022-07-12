@@ -53,7 +53,7 @@ export const Lesson = (props: LessonProps) => {
             </span>
           )}
 
-          <span className={classNames("text-xs rounded py-[0.125rem] px-2 text-white border  font-bold", {
+          <span className={classNames("text-xs rounded py-[0.125rem] px-2 text-white border font-bold lgx:w-[90px] text-center", {
             'border-white': isActiveLesson,
             'border-green-300': !isActiveLesson,
           })}>
