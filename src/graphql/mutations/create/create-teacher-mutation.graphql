@@ -1,0 +1,11 @@
+mutation CreateTeacher($name: String!, $avatarURL: String!, $email: String!, $bio: String!, $slug: String!, $password: String!) {
+  createTeacher(
+    data: {name: $name, avatarURL: $avatarURL, email: $email, bio: $bio, slug: $slug, password: $password}
+  ) {
+    id
+    slug
+  }
+  publishTeacher(to: PUBLISHED, where: {slug: $slug}) {
+    id
+  }
+}

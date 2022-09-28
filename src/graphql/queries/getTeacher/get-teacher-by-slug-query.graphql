@@ -1,0 +1,5 @@
+query getTeacherBySlug($slug: String) {
+  teacher(where: { slug: $slug }) {
+    id
+  }
+}

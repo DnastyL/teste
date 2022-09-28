@@ -5,4 +5,9 @@
 body {
   @apply bg-gray-900 text-gray-100;
   -webkit-font-smoothing: antialiased;
+
+}
+
+input[type="text"],[type="email"],[type="password"]{
+  @apply bg-gray-700 h-14 w-full border-2 rounded border-solid px-5 border-black border-opacity-50 outline-none focus:border-blue-500 focus:text-blue-500 transition-colors;
 }

@@ -1,0 +1,5 @@
+mutation deleteLesson($slug: String!) {
+  deleteLesson(where: {slug: $slug}) {
+    id
+  }
+}

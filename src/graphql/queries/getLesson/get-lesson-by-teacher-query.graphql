@@ -1,0 +1,9 @@
+query GetLessonByTeacher($id: ID) {
+  lessons(orderBy: availableAt_ASC, where: {teacher: {id: $id}}, stage: DRAFT) {
+    title
+    id
+    lessonType
+    availableAt
+    slug
+  }
+}

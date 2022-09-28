@@ -1,0 +1,7 @@
+mutation CreateLesson($title: String!, $slug: String!, $videoId: String!, $lessonType: LessonType!, $description: String!, $teacherSlug: String!, $availableAt: DateTime!) {
+  createLesson(
+    data: {title: $title, slug: $slug, videoId: $videoId, description: $description, teacher: {connect: {slug: $teacherSlug}}, availableAt: $availableAt, lessonType: $lessonType}
+  ) {
+    id
+  } 
+}

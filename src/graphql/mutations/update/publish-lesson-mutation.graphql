@@ -1,0 +1,5 @@
+mutation publishLesson($slug: String!) {
+  publishLesson(where: {slug: $slug}){
+      id
+  }
+}

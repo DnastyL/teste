@@ -1,5 +1,4 @@
 import { DefaultUi, Player, Youtube } from "@vime/react";
-
 import {
   DiscordLogo,
   Lightning,
@@ -8,33 +7,49 @@ import {
   Image,
 } from "phosphor-react";
 import "@vime/core/themes/default.css";
-import { useGetLessonBySlugQuery } from "../graphql/generated";
+import { Stage, useGetLessonBySlugQuery,  } from "../graphql/generated";
+import { Home } from "../pages/Home";
+import { useEffect } from "react";
+import { useContextValues } from "../hooks/useContext";
+
 
 interface VideoProps {
-  lessonSlug: string;
+  lessonSlug: string | undefined;
+  stageLesson: Stage
 }
 
-export const Video = ({ lessonSlug }: VideoProps) => {
+export const Video = ({ lessonSlug, stageLesson }: VideoProps) => {
   const { data } = useGetLessonBySlugQuery({
     variables: {
       slug: lessonSlug,
+      stage: stageLesson,
     },
   });
+  const { setApiTarget } = useContextValues();
 
-  if (!data || !data.lesson) {
+  useEffect(() =>{
+    setApiTarget(data?.lesson?.videoId)
+  },[data?.lesson?.videoId])
+
+    
+
+  if (!data || !data.lesson  ) {
     return (
       <div className="flex-1 items-center justify-center">
-        <p>Loading...</p>
+        <Home/>
       </div>
     );
   }
+  
+ 
+  console.log(data.lesson.videoId)
 
   return (
     <div className="flex-1">
       <div className="bg-black flex justify-center">
         <div className="h-full w-full max-w-[1100px] max-h-[60vh] aspect-video">
           <Player>
-            <Youtube videoId={data.lesson.videoId} />
+            <Youtube videoId={data.lesson.videoId}  />
             <DefaultUi />
           </Player>
         </div>
