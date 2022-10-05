@@ -7,10 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import classNames from "classnames";
 
 export const Form = ({
-  name,
-  email,
-  setName,
-  setEmail,
+  subscribeValues,
+  setSubscribeValues,
   handleSubscribe,
   formLesson,
   children,
@@ -91,7 +89,11 @@ export const Form = ({
                   .toLocaleLowerCase()
                   .replace(/[^a-z]/gm, "-");
                 !instructor
-                  ? setName!(valueReplace)
+                  ? setSubscribeValues!({
+                      ...subscribeValues!,
+                      [event.target.name]: valueReplace,
+                      ["slug"]: slug,
+                    })
                   : setTeacherValues!({
                       ...teacherValues!,
                       [event.target.name]: valueReplace,
@@ -101,8 +103,12 @@ export const Form = ({
             />
             <label
               htmlFor="username"
-              className={classNames("absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
-                  { "-top-2 text-xs transition-all": teacherValues?.name || name }
+              className={classNames(
+                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
+                {
+                  "-top-2 text-xs transition-all":
+                    teacherValues?.name || subscribeValues?.name,
+                }
               )}
             >
               Seu nome completo
@@ -119,17 +125,24 @@ export const Form = ({
               onChange={(event) => {
                 const { name, value } = event.target;
                 !instructor
-                  ? setEmail!(value)
+                  ? setSubscribeValues!({
+                      ...subscribeValues!,
+                      [name]: value,
+                    })
                   : setTeacherValues!({
                       ...teacherValues!,
                       [name]: value,
                     });
               }}
             />
-             <label
+            <label
               htmlFor="useremail"
-              className={classNames("absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
-                  { "-top-2 text-xs transition-all": teacherValues?.email || email }
+              className={classNames(
+                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
+                {
+                  "-top-2 text-xs transition-all":
+                    teacherValues?.email || subscribeValues?.email,
+                }
               )}
             >
               Digite seu email
@@ -139,10 +152,9 @@ export const Form = ({
       ) : (
         <>
           <input
-            className="bg-gray-900 rounded px-5 h-14 focus:border-blue-500 transition duration-200 outline-none  border-opacity-5"
+            className="bg-gray-900 rounded px-5 h-14 transition duration-200 outline-none  border-opacity-5"
             type="text"
             name="title"
-            value={lessonValues.title}
             placeholder="Digite o título da aula"
             onChange={handleOnChange}
           />
@@ -154,7 +166,6 @@ export const Form = ({
             type="text"
             name="videoId"
             autoComplete="off"
-            value={lessonValues?.videoId}
             placeholder="Video ID (YouTube)"
             maxLength={11}
             onChange={handleOnChange}
@@ -163,11 +174,10 @@ export const Form = ({
             <span className="text-red-800">ID do video indefinido</span>
           )}
           <input
-            className="bg-gray-900 rounded px-5 h-14 focus:border-blue-500 transition duration-200 outline-none  border-opacity-5"
+            className="bg-gray-900 border-none rounded px-5 h-14 focus:border-blue-500 transition duration-200 outline-none border-opacity-5"
             type="text"
             name="description"
             autoComplete="off"
-            value={lessonValues.description}
             placeholder="Descrição da Aula"
             onChange={handleOnChange}
           />
@@ -180,7 +190,7 @@ export const Form = ({
             </label>
             <select
               name="lessonType"
-              className="bg-gray-700 outline-none rounded border-2 border-black opacity-50 appearance-none px-5 h-12"
+              className="bg-gray-700 outline-none rounded border-2 border-black border-opacity-50 appearance-none px-5 h-12"
               value={lessonValues.lessonType}
               onChange={handleOnChange}
             >
@@ -199,7 +209,6 @@ export const Form = ({
               placeholderText="16/08/2022,14:30"
               onChange={(date: Date) => formatDate(date, "availableAt")}
               showTimeSelect
-              className=""
               id="availableDate"
               dateFormat="dd/MM/yyyy"
             />

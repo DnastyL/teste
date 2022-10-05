@@ -1,43 +1,29 @@
-import { useState, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "../components/Button";
-import { Form } from "../components/Form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Login } from "../components/Login";
 import { Logo } from "../components/Logo";
-import { useCreateSubscriberMutation } from "../graphql/generated";
-import { useContextValues } from "../hooks/useContext";
+import { RegisterSubscriber } from "../components/RegisterSubscriber";
 import { Home } from "./Home";
+import { ArrowCircleLeft } from "phosphor-react";
 
 export const Subscribe = () => {
-  const { setUser } = useContextValues();
+  const location = useLocation();
   const navigate = useNavigate();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-
-  const [createSubscriber, { loading }] = useCreateSubscriberMutation();
-
-  async function handleSubscribe(event: FormEvent) {
-    event.preventDefault();
-
-    try{
-      await createSubscriber({
-      variables: {
-        name,
-        email,
-      },
-    });
-    setUser(true);
-    navigate("/event");
-  }catch(error){
-    throw new Error (`Error on createSubscriber ${error} `);
-  }
-  }
 
   return (
     <Home>
       <div className=" w-full max-w-[1100px] flex items-center justify-between mt-20 mx-auto lg:flex-col lg:max-w-full lg:gap-3 ">
         <div className="max-w-[640px] sm:max-w-[330px] sm:flex sm:flex-col sm:items-center">
-          <Logo />
+          <div className="flex items-center">
+            {location.pathname === "/login" && (
+              <span
+                className="hidden relative right-11 sm:flex hover:text-green-500 hover:cursor-pointer sml:right-3"
+                onClick={() => navigate("/")}
+              >
+                <ArrowCircleLeft size={24} />
+              </span>
+            )}
+            <Logo />
+          </div>
           <h1 className="mt-8 text-[2.5rem] leading-tight sm:text-center sm:text-[2.2rem]">
             Construa uma{" "}
             <strong className="text-blue-500">aplicação completa,</strong> do
@@ -49,33 +35,7 @@ export const Subscribe = () => {
             oportunidades do mercado{" "}
           </p>
         </div>
-        <div className="p-8 bg-gray-700 border border-gray-500 rounded">
-          <strong className="text-2xl m-6 block">
-            Inscreva-se gratuitamente
-          </strong>
-          <div className="flex flex-col gap-2">
-            <Form
-              name={name}
-              email={email}
-              setName={setName}
-              setEmail={setEmail}
-              handleSubscribe={handleSubscribe}
-            >
-              <Button type="submit" disabled={loading || !name || !email}>
-                Garantir sua Vaga
-              </Button>
-            </Form>
-            <span
-              onClick={() => {
-                navigate("/instructor");
-              }}
-            >
-              <a className="text-base hover:text-green-500 hover:cursor-pointer border-b-[1px] hover:border-green-500">
-                Entrar como Instrutor
-              </a>
-            </span>
-          </div>
-        </div>
+        {location.pathname === "/" ? <RegisterSubscriber /> : <Login />}
       </div>
       <img src="/src/assets/code-mackup.png" className="mt-10 lg:p-6" alt="" />
     </Home>

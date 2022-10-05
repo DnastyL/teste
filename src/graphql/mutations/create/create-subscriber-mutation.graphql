@@ -1,5 +1,10 @@
-mutation CreateSubscriber($name: String!, $email: String!) {
-    createSubscriber(data: { name: $name, email: $email }) {
-      id
-    }
+mutation createSubscriber($name: String!, $email: String!, $slug: String!, $password: String!) {
+  createSubscriber(
+    data: {name: $name, email: $email, password: $password, slug: $slug}
+  ) {
+    id
   }
+  publishSubscriber(where: {slug: $slug}, to: PUBLISHED) {
+    id
+  }
+}

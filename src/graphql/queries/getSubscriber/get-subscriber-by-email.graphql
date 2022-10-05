@@ -1,0 +1,6 @@
+query getSubscriber($email: String!, $password: String!) {
+  subscribers(where: {email: $email, AND: {password: $password}}) {
+    name
+    slug
+  }
+}

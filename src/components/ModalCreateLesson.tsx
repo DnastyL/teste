@@ -6,7 +6,6 @@ import { Form } from "./Form";
 import { Button } from "./Button";
 import { refreshPage } from "../hooks/useRefreshPage";
 import { closeModal } from "../hooks/useCloseModal";
-import { useNavigate } from "react-router-dom";
 
 type ModalCreateLessonType = {
   formLesson: boolean;
@@ -21,10 +20,9 @@ export const ModalCreateLesson = ({
   teacherSlug,
   isOpen,
 }: ModalCreateLessonType) => {
-  const { lessonValues, setTeacher } = useContextValues();
+  const { lessonValues } = useContextValues();
   const [createLesson, { loading }] = useCreateLessonMutation();
   const ref = useRef(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (isOpen) {
@@ -36,7 +34,6 @@ export const ModalCreateLesson = ({
 
   async function handleSubscribeLesson(event: FormEvent) {
     event.preventDefault();
-    console.log(lessonValues);
 
     try {
       await createLesson({

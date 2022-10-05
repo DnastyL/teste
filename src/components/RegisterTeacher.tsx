@@ -13,11 +13,10 @@ export const RegisterTeacher = () => {
   const [teacherValues, setTeacherValues] = useState<TypeTeacher>(
     {} as TypeTeacher
   );
-  const { setTeacher, sessionStorageTeacher, setSessionStorageTeacher } =
-    useContextValues();
+  const { handleSubmitUserInSessionStorage } = useContextValues();
   const [imageSelected, setImageSelected] = useState<File>({} as File);
   const navigate = useNavigate();
-  const [createTeacher, { loading }] = useCreateTeacherMutation();
+  const [createTeacher, { loading, error }] = useCreateTeacherMutation();
 
   useEffect(() => {
     if (imageSelected.size > 1) {
@@ -28,12 +27,10 @@ export const RegisterTeacher = () => {
   async function handleSubscribeTeacher(event: FormEvent) {
     event.preventDefault();
 
-    console.log("está funcionando");
-
     try {
       await createTeacher({
         variables: {
-          name: teacherValues.name.trim(),
+          name: teacherValues.name,
           avatarURL: teacherValues.avatarURL,
           email: teacherValues.email.trim(),
           bio: teacherValues.bio.trim(),
@@ -42,10 +39,12 @@ export const RegisterTeacher = () => {
         },
       })
         .then(() => {
-          handleSubmitTeacherInSessionStorage(
-            teacherValues.name.trim(),
+          const isSubscriber = false;
+          handleSubmitUserInSessionStorage(
+            teacherValues.name,
             teacherValues.email.trim(),
-            teacherValues.slug
+            teacherValues.slug,
+            isSubscriber
           );
           return navigate(`/instructor/event/${teacherValues.slug}`);
         })
@@ -57,24 +56,6 @@ export const RegisterTeacher = () => {
     }
   }
 
-  function handleSubmitTeacherInSessionStorage(
-    name: string,
-    email: string,
-    slug: string
-  ) {
-    const teacherObject = {
-      name: name,
-      email: email,
-      slug: slug,
-    };
-    if (sessionStorageTeacher) {
-      sessionStorage.removeItem("teacher");
-    }
-    setSessionStorageTeacher(teacherObject);
-    sessionStorage.setItem("teacher", JSON.stringify(teacherObject));
-    setTeacher(true);
-  }
-
   function handleInput() {
     let input = document.createElement("input");
     input.setAttribute("type", "file");
@@ -83,7 +64,6 @@ export const RegisterTeacher = () => {
     input.onchange = async (event) => {
       const target = event.currentTarget as HTMLInputElement;
       if (target.files != undefined && target.files.length > 0) {
-        console.log(target.files);
         const file = target.files[0];
         setImageSelected(file);
       }
@@ -103,7 +83,6 @@ export const RegisterTeacher = () => {
           formData
         )
         .then(async (response) => {
-          console.log(response.data);
           const avatarURL: string = await response.data.secure_url;
           setTeacherValues({ ...teacherValues, ["avatarURL"]: avatarURL });
         });
@@ -117,7 +96,6 @@ export const RegisterTeacher = () => {
       <strong className="text-2xl m-6 block">Inscrição do Professor</strong>
       <div className="flex flex-col gap-2">
         <Form
-          name={teacherValues.name}
           teacherValues={teacherValues}
           setTeacherValues={setTeacherValues}
           handleSubscribe={handleSubscribeTeacher}
@@ -196,10 +174,15 @@ export const RegisterTeacher = () => {
             navigate("/instructor/login");
           }}
         >
-          <a className="text-sm hover:text-green-500 hover:cursor-pointer border-b-[1px] hover:border-green-500">
+          <a className="text-sm font-semibold hover:text-green-500 hover:cursor-pointer hover:border-green-500">
             Fazer Login
           </a>
         </span>
+        {error && (
+          <span className="text-sm font-semibold text-red-900">
+            Teacher already exists
+          </span>
+        )}
       </div>
     </div>
   );

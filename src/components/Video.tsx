@@ -42,7 +42,6 @@ export const Video = ({ lessonSlug, stageLesson }: VideoProps) => {
   }
   
  
-  console.log(data.lesson.videoId)
 
   return (
     <div className="flex-1">

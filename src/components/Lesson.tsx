@@ -21,7 +21,7 @@ interface LessonProps {
 export const Lesson = (props: LessonProps) => {
   const { lessonSlug } = useParams<{ lessonSlug: string }>();
   const { teacherSlug } = useParams<{ teacherSlug: string }>();
-  const { apiTarget } = useContextValues();
+  const { apiTarget, sessionStorageSubscriber } = useContextValues();
 
   const isLessonAvailable = isPast(props.avalaibleAt);
   const availableDateFormatted = format(
@@ -34,14 +34,13 @@ export const Lesson = (props: LessonProps) => {
 
   const isActiveLesson = lessonSlug === props.slug;
 
+
   useEffect(() => {
-    console.log(isActiveLesson);
     if (isActiveLesson && teacherSlug) {
       axios
         .get(`/vi/${apiTarget}/sddefault.jpg`)
         .then((response) => {
           if (response.status === 200) {
-            console.log(response);
             props.setSubmitLesson(true);
           }
         })
@@ -75,7 +74,7 @@ export const Lesson = (props: LessonProps) => {
       <Link
         to={
           !props.teacherSlug
-            ? `/event/lesson/${props.slug}`
+            ? `/event/${sessionStorageSubscriber.slug}/lesson/${props.slug}`
             : `/instructor/event/${props.teacherSlug}/lesson/${props.slug}`
         }
         onClick={() => props.setFormLesson(false)}

@@ -19,6 +19,9 @@ type ContextType = {
   setApiTarget: React.Dispatch<React.SetStateAction<string | undefined>>;
   sessionStorageTeacher: sessionStorageValues;
   setSessionStorageTeacher: React.Dispatch<React.SetStateAction<sessionStorageValues>>;
+  sessionStorageSubscriber: sessionStorageValues;
+  setSessionStorageSubscriber: React.Dispatch<React.SetStateAction<sessionStorageValues>>;
+  handleSubmitUserInSessionStorage: (name: string, email: string, slug: string, isSubscriber: boolean) => void;
 };
 
 type ContextProviderTpe = {
@@ -35,10 +38,42 @@ export const ContextProvider = (props: ContextProviderTpe) => {
     {} as TypeLesson
   );
   const [sessionStorageTeacher, setSessionStorageTeacher] = useState<sessionStorageValues>(() => {
-    const sessionStorageValue = sessionStorage.getItem("teacher");
-    return sessionStorageValue ? JSON.parse(sessionStorageValue) : false;
+    const sessionStorageValues = sessionStorage.getItem("teacher");
+    return sessionStorageValues ? JSON.parse(sessionStorageValues) : false;
+  });
+
+  const [sessionStorageSubscriber, setSessionStorageSubscriber] = useState<sessionStorageValues>(() => {
+    const sessionStorageValues = sessionStorage.getItem("subscriber");
+    return sessionStorageValues ? JSON.parse(sessionStorageValues) : false;
   });
   const [apiTarget, setApiTarget] = useState<string | undefined>();
+
+  function handleSubmitUserInSessionStorage(
+    name: string,
+    email: string,
+    slug: string,
+    isSubscriber: boolean
+  ) {
+    const teacherObject = {
+      name: name,
+      email: email,
+      slug: slug,
+    };
+    if (!isSubscriber) {
+      if(sessionStorageTeacher){
+        sessionStorage.removeItem("teacher");
+      }
+      setSessionStorageTeacher(teacherObject);
+      sessionStorage.setItem("teacher", JSON.stringify(teacherObject));
+      setTeacher(true);
+    } else {
+      if(sessionStorageSubscriber){
+        sessionStorage.removeItem("subscriber")
+      }
+      setSessionStorageSubscriber(teacherObject);
+      sessionStorage.setItem("subscriber", JSON.stringify(teacherObject));
+    }
+  }
 
  
 
@@ -57,7 +92,10 @@ export const ContextProvider = (props: ContextProviderTpe) => {
         apiTarget,
         setApiTarget,
         sessionStorageTeacher,
-        setSessionStorageTeacher
+        setSessionStorageTeacher,
+        sessionStorageSubscriber,
+        setSessionStorageSubscriber,
+        handleSubmitUserInSessionStorage,
       }}
     >
       {props.children}
