@@ -82,6 +82,7 @@ export const Login = () => {
           name="login"
           onSubmit={location.pathname === "/instructor/login" ? handleTeacherLogin : handleLogin}
           className="flex flex-col gap-2 w-full"
+          autoComplete="off"
         >
           <div className="relative">
             <input

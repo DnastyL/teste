@@ -70,7 +70,7 @@ export const Form = ({
   }
 
   return (
-    <form onSubmit={handleSubscribe} className="flex flex-col gap-2 w-full">
+    <form onSubmit={handleSubscribe} className="flex flex-col gap-2 w-full" autoComplete="off">
       {!formLesson ? (
         <>
           <div className="relative">
