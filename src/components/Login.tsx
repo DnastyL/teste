@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   useGetSubscriberQuery,
@@ -8,15 +8,12 @@ import {
 import { useContextValues } from "../hooks/useContext";
 import { Button } from "./Button";
 
-
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isTeacher, setIsTeacher] = useState(true);
   const [isSub, setIsSub] = useState(true);
-  const {
-    handleSubmitUserInSessionStorage
-  } = useContextValues();
+  const { handleSubmitUserInSessionStorage } = useContextValues();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,7 +30,6 @@ export const Login = () => {
     },
   });
 
-
   async function handleTeacherLogin(event: FormEvent) {
     event.preventDefault();
 
@@ -48,12 +44,12 @@ export const Login = () => {
         );
         return navigate(`/instructor/event/${teacher.slug}`);
       });
-    }else{
-     return setIsTeacher(false);
-    } 
+    } else {
+      return setIsTeacher(false);
+    }
   }
 
-  async function handleLogin(event: FormEvent){
+  async function handleLogin(event: FormEvent) {
     event.preventDefault();
 
     if (dataSubscriber && dataSubscriber.subscribers.length > 0) {
@@ -67,12 +63,10 @@ export const Login = () => {
         );
         return navigate(`/event/${subscriber.slug}`);
       });
-    }
-    else{
+    } else {
       return setIsSub(false);
     }
   }
-  
 
   return (
     <div className="p-8 bg-gray-700 border border-gray-500 rounded">
@@ -80,7 +74,11 @@ export const Login = () => {
       <div className="flex flex-col gap-2">
         <form
           name="login"
-          onSubmit={location.pathname === "/instructor/login" ? handleTeacherLogin : handleLogin}
+          onSubmit={
+            location.pathname === "/instructor/login"
+              ? handleTeacherLogin
+              : handleLogin
+          }
           className="flex flex-col gap-2 w-full"
           autoComplete="off"
         >
@@ -88,7 +86,6 @@ export const Login = () => {
             <input
               type="email"
               className="peer"
-              autoComplete="off"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -96,7 +93,7 @@ export const Login = () => {
             <label
               htmlFor="email"
               className={classNames(
-                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
+                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
                 { "-top-2 text-xs transition-all": email }
               )}
             >
@@ -114,24 +111,23 @@ export const Login = () => {
             <label
               htmlFor="password"
               className={classNames(
-                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text  peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
+                "absolute bg-gray-700 rounded top-4 px-1 left-5 cursor-text peer-focus:text-xs peer-focus:text-blue-500 peer-focus:-top-2 transition-all",
                 { "-top-2 text-xs transition-all": password }
               )}
             >
               Digite sua senha
             </label>
           </div>
-          <Button
-            type="submit"
-            disabled={!email || !password || !data?.teachers || !dataSubscriber?.subscribers}
-          >
+          <Button type="submit" disabled={!email || !password}>
             Login
           </Button>
         </form>
       </div>
-      {!isTeacher || !isSub  ? (
+      {!isTeacher || !isSub ? (
         <p className="text-base text-red-900 mt-3">Email ou Senha Incorretos</p>
-      ): ''}
+      ) : (
+        ""
+      )}
     </div>
   );
 };

@@ -5,9 +5,23 @@
 body {
   @apply bg-gray-900 text-gray-100;
   -webkit-font-smoothing: antialiased;
-
 }
 
-input[type="text"],[type="email"],[type="password"]{
+input[type="text"],
+[type="email"],
+[type="password"] {
   @apply bg-gray-700 h-14 w-full border-2 rounded border-solid px-5 border-black border-opacity-50 outline-none focus:border-blue-500 focus:text-blue-500 transition-colors;
+}
+
+input[type="text"]:-webkit-autofill,
+[type="email"]:-webkit-autofill,
+[type="password"]:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #121214 inset;
+  -webkit-text-fill-color: #e1e1e6 !important;
+}
+
+input[type="text"]:-webkit-autofill:focus,
+[type="email"]:-webkit-autofill:focus,
+[type="password"]:-webkit-autofill:focus {
+  -webkit-text-fill-color: #81d8f7 !important;
 }

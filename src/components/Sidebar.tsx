@@ -95,7 +95,7 @@ export const Sidebar = ({ teacherSlug, teacherId, formLesson, setFormLesson, set
               </Button>
             </span>
             <span className={
-                  classNames("flex bg-green-500 w-[60px] h-[60px] mt-3 items-center justify-center rounded-full hover:cursor-pointer",
+                  classNames("flex bg-green-500 w-[60px] h-[60px] smll:h-[50px] mt-3 items-center justify-center rounded-full hover:cursor-pointer",
                   {
                    "opacity-60 hover:cursor-not-allowed": !buttonActive,
                   })}

@@ -66,7 +66,7 @@ export const ModalCreateLesson = ({
       } 
       className="flex items-center justify-center fixed inset-0 bg-black bg-opacity-75 z-[9999]"
     >
-      <div className="p-8 bg-gray-700 border border-gray-500 rounded relative">
+      <div className="p-8 bg-gray-700 border border-gray-500 rounded relative smll:w-full smll:h-full">
         <div className="p-3">
           <strong className="text-2xl m-6 block">
             Cadastre sua Aula no{" "}
